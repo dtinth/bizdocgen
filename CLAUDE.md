@@ -9,7 +9,7 @@ This is a Vue 3 + TypeScript application designed as a Grist widget. The app int
 ## Key Architecture
 
 - **Frontend Framework**: Vue 3 with Composition API and `<script setup>` syntax
-- **Build Tool**: Vite for fast development and optimized builds
+- **Build Tool**: Vite+ for unified development, testing, linting, and builds
 - **Package Manager**: Bun (preferred over npm/yarn)
 - **Testing**: Vitest for unit tests, Playwright for E2E tests
 - **Type System**: Full TypeScript with Vue-specific type definitions
@@ -17,28 +17,29 @@ This is a Vue 3 + TypeScript application designed as a Grist widget. The app int
 
 ## Development Commands
 
-Use Bun for all commands (not npm/yarn):
+Use Bun for all commands (not npm/yarn). The project scripts wrap the Vite+ `vp` command surface:
 
 ```bash
 # Development
-bun dev                    # Start dev server with hot reload
-bun run build             # Build for production (includes type-check)
-bun preview               # Preview production build
+bun dev                    # Start the Vite+ dev server with hot reload
+bun run build             # Run type-check and Vite+ production build
+bun preview               # Preview the production build
 
 # Testing
-bun test:unit             # Run all unit tests with Vitest
+bun test:unit             # Run all unit tests with Vite+'s Vitest integration
 bun test:unit filename    # Run specific test file
 bun test:e2e              # Run Playwright E2E tests
 
 # Code Quality
-bun lint                  # Run ESLint with auto-fix
-bun format                # Format code with Prettier
+bun lint                  # Run Vite+ lint with auto-fix
+bun format                # Format source files with Vite+
 bun run type-check        # TypeScript type checking only
 ```
 
 ## Grist Integration
 
 The app connects to Grist's widget API through:
+
 - Global `window.grist` object availability check
 - `grist.ready()` to signal widget is loaded
 - `grist.onRecord()` to receive data updates
@@ -60,34 +61,39 @@ src/
 ## E2E Testing Architecture
 
 ### Page Object Pattern
+
 - **Component-based structure**: `AppTester` with specialized testers (`ActionButtonsTester`, `PrintableDocumentTester`, `SettingsTester`)
 - **Semantic locators only**: Use `getByTestId()`, `getByRole()`, `getByText()` - never CSS selectors
 - **Built-in testability**: DOM event-based mocking via `mockgristrecord` custom events
 - **Test pattern**: `app.component.method()` for clear, maintainable test code
 
 ### Vue Component Testability
+
 - **Required test IDs**: Add `data-testid` attributes to all interactive elements
 - **ARIA roles**: Include semantic roles (`main`, `document`, `alert`, `status`) for accessibility and testing
 - **Accessibility attributes**: Use `aria-label`, `aria-expanded` for better semantic targeting
 - **Data attributes**: Use `data-document-number` for test synchronization with dynamic content
 
 ### Playwright Best Practices
+
 - **Semantic locators preferred**: `getByTestId()` > `getByRole()` > `getByText()` > `locator()` (last resort)
 - **Screenshot strategy**: Target specific elements (`getByTestId('document')`) not full pages
 - **Test reliability**: Wait for specific data attributes rather than generic visibility
 - **Browser configuration**: Use Chromium-only for faster, consistent CI execution
 
 ### CI/CD Requirements
+
 - **Build before E2E**: Always run `bun run build` before Playwright tests in CI
-- **ESLint configuration**: Disable `playwright/expect-expect` rule for Page Object pattern
+- **Lint configuration**: Disable `playwright/expect-expect` rule for Page Object pattern
 - **Artifact handling**: Upload test results and screenshots on failure for debugging
 
 ### Mock Strategy
+
 ```typescript
 // Preferred: DOM event-based mocking (realistic, no test pollution)
 await page.evaluate((data) => {
-  document.dispatchEvent(new CustomEvent('mockgristrecord', { detail: data }))
-}, mockData)
+  document.dispatchEvent(new CustomEvent("mockgristrecord", { detail: data }));
+}, mockData);
 
 // Avoid: Injection-based mocking (invasive, breaks encapsulation)
 ```
@@ -95,9 +101,11 @@ await page.evaluate((data) => {
 ## CSS Architecture
 
 ### BEM Methodology
+
 The project uses BEM (Block Element Modifier) naming convention instead of modern approaches like CSS Modules or CSS-in-JS to enable **user customization**. Users can apply custom CSS through the settings panel to modify document appearance.
 
 **Why BEM over CSS Modules/CSS-in-JS:**
+
 - **Predictable class names**: Users can target `.document__header` or `.items-table__row` reliably
 - **No build-time obfuscation**: Class names remain human-readable in production
 - **Custom CSS compatibility**: Users can write CSS overrides without knowing internal implementation
@@ -106,10 +114,11 @@ The project uses BEM (Block Element Modifier) naming convention instead of moder
 The project consistently uses BEM naming convention for CSS classes:
 
 - **Block**: Component name (e.g., `action-buttons`, `items-table`, `app`)
-- **Element**: Part of the block (e.g., `action-buttons__button`, `items-table__header`) 
+- **Element**: Part of the block (e.g., `action-buttons__button`, `items-table__header`)
 - **Modifier**: Variation or state (e.g., `action-buttons__button--primary`, `app__settings--open`)
 
 **Examples:**
+
 ```html
 <!-- Block -->
 <div class="action-buttons">
@@ -127,18 +136,20 @@ The project consistently uses BEM naming convention for CSS classes:
 ```
 
 **Guidelines:**
+
 - Use double underscores (`__`) for elements
-- Use double hyphens (`--`) for modifiers  
+- Use double hyphens (`--`) for modifiers
 - Keep block names semantic to the Vue component
 - Avoid deeply nested BEM structures (max 2-3 levels)
 - Combine with `data-testid` attributes for testing (never use BEM classes in tests)
 
 **User Customization Example:**
 Users can apply custom CSS through the settings panel:
+
 ```css
 /* Change document font */
 .document {
-  --font-family: 'Comic Sans MS', Itim, sans-serif;
+  --font-family: "Comic Sans MS", Itim, sans-serif;
 }
 
 /* Customize table headers */
@@ -158,5 +169,5 @@ Users can apply custom CSS through the settings panel:
 - Uses Bun as primary package manager (check bun.lock exists)
 - Follows Vue 3 Composition API patterns with TypeScript
 - All components should use `<script setup lang="ts">` syntax
-- ESLint and Prettier are configured for consistent code style
-- Vite handles module resolution with `@/*` aliases for src directory
+- Vite+ lint and format settings are configured in `vite.config.ts`
+- Vite+ handles module resolution with `@/*` aliases for src directory
