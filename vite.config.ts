@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import { defineConfig } from 'vite-plus'
+import { configDefaults, defineConfig } from 'vite-plus'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -145,7 +145,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    exclude: ['**/node_modules/**', '**/.git/**', 'e2e/**'],
+    exclude: [...configDefaults.exclude, 'e2e/**'],
     root: fileURLToPath(new URL('./', import.meta.url)),
   },
   plugins: [vue(), vueDevTools()],
