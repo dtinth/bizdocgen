@@ -67,8 +67,8 @@ jobs:
       - name: Start Grist
         run: docker compose -f e2e/docker-compose.yml up -d
 
-      - name: Install Playwright browsers
-        run: vp exec playwright install --with-deps chromium
+      - name: Setup Playwright
+        uses: dtinth/setup-playwright-test-docker@main
 
       - name: Run E2E tests
         run: vp run test:e2e
