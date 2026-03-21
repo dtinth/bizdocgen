@@ -20,25 +20,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1
         with:
-          bun-version: 1.2.19
+          node-version: "22"
+          cache: true
+          run-install: false
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: vp install --frozen-lockfile
 
       - name: Type check
-        run: bun run type-check
+        run: vp run type-check
 
       - name: Lint
-        run: bun run lint
+        run: vp run lint
 
       - name: Unit tests
-        run: bun run test:unit
+        run: vp test
 
       - name: Build
-        run: bun run build
+        run: vp run build
 
   e2e:
     name: E2E Tests
@@ -49,31 +51,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1
         with:
-          bun-version: 1.2.19
+          node-version: "22"
+          cache: true
+          run-install: false
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: vp install --frozen-lockfile
 
       - name: Build application
-        run: bun run build
+        run: vp run build
 
       - name: Start Grist
         run: docker compose -f e2e/docker-compose.yml up -d
 
       - name: Install Playwright browsers
-        run: bunx playwright install --with-deps chromium
+        run: vp exec playwright install --with-deps chromium
 
       - name: Run E2E tests
-        run: bun run test:e2e
+        run: vp run test:e2e
         env:
           CI: true
 
       - name: Percy
         if: ${{ always() && env.PERCY_TOKEN != '' }}
-        run: bunx @percy/cli upload e2e-results/
+        run: vp dlx @percy/cli upload e2e-results/
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 

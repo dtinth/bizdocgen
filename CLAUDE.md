@@ -10,30 +10,29 @@ This is a Vue 3 + TypeScript application designed as a Grist widget. The app int
 
 - **Frontend Framework**: Vue 3 with Composition API and `<script setup>` syntax
 - **Build Tool**: Vite+ for unified development, testing, linting, and builds
-- **Package Manager**: Bun (preferred over npm/yarn)
+- **Package Manager**: pnpm (managed by Vite+)
 - **Testing**: Vitest for unit tests, Playwright for E2E tests
 - **Type System**: Full TypeScript with Vue-specific type definitions
 - **Integration**: Grist API for receiving and displaying spreadsheet data
 
 ## Development Commands
 
-Use Bun for all commands (not npm/yarn). The project scripts wrap the Vite+ `vp` command surface:
+Use Vite+ commands for development. Vite+ manages Node.js and the pnpm package manager for this project:
 
 ```bash
 # Development
-bun dev                    # Start the Vite+ dev server with hot reload
-bun run build             # Run type-check and Vite+ production build
-bun preview               # Preview the production build
+vp dev                    # Start the Vite+ dev server with hot reload
+vp run build              # Run type-check and Vite+ production build
+vp preview                # Preview the production build
 
 # Testing
-bun test:unit             # Run all unit tests with Vite+'s Vitest integration
-bun test:unit filename    # Run specific test file
-bun test:e2e              # Run Playwright E2E tests
+vp run test:unit          # Run all unit tests with Vite+'s Vitest integration
+vp run test:e2e           # Run Playwright E2E tests
 
 # Code Quality
-bun lint                  # Run Vite+ lint with auto-fix
-bun format                # Format source files with Vite+
-bun run type-check        # TypeScript type checking only
+vp run lint               # Run Vite+ lint with auto-fix
+vp run format             # Format source files with Vite+
+vp run type-check        # TypeScript type checking only
 ```
 
 ## Grist Integration
@@ -83,7 +82,7 @@ src/
 
 ### CI/CD Requirements
 
-- **Build before E2E**: Always run `bun run build` before Playwright tests in CI
+- **Build before E2E**: Always run `vp run build` before Playwright tests in CI
 - **Lint configuration**: Disable `playwright/expect-expect` rule for Page Object pattern
 - **Artifact handling**: Upload test results and screenshots on failure for debugging
 
@@ -166,7 +165,7 @@ Users can apply custom CSS through the settings panel:
 
 ## Development Notes
 
-- Uses Bun as primary package manager (check bun.lock exists)
+- Uses pnpm as the package manager selected through Vite+ (check `pnpm-lock.yaml` exists)
 - Follows Vue 3 Composition API patterns with TypeScript
 - All components should use `<script setup lang="ts">` syntax
 - Vite+ lint and format settings are configured in `vite.config.ts`
