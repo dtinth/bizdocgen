@@ -17,7 +17,7 @@ A custom [Grist widget](https://support.getgrist.com/widget-custom/) for generat
 
 - **Frontend**: Vue 3 with Composition API + TypeScript
 - **Build Tool**: Vite+
-- **Package Manager**: Bun
+- **Package Manager**: pnpm (managed through Vite+)
 
 ## Development
 
@@ -29,10 +29,10 @@ git clone https://github.com/dtinth/TypeScriptAccount.git
 cd TypeScriptAccount
 
 # Install dependencies
-bun install
+vp install
 
 # Start development server
-bun dev
+vp dev
 ```
 
 ## License

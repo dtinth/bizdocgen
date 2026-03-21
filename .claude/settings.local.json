@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "allow": ["Bash(bun lint:*)", "Bash(bun run type-check:*)"],
+    "allow": ["Bash(vp run lint:*)", "Bash(vp run type-check:*)"],
     "deny": []
   }
 }
