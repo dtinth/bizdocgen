@@ -16,7 +16,7 @@ A custom [Grist widget](https://support.getgrist.com/widget-custom/) for generat
 ## Technology Stack
 
 - **Frontend**: Vue 3 with Composition API + TypeScript
-- **Build Tool**: Vite
+- **Build Tool**: Vite+
 - **Package Manager**: Bun
 
 ## Development
@@ -41,6 +41,7 @@ MIT
 
 ## Related Documentation
 
+- [Vite+ Guide](https://viteplus.dev/guide/)
 - [Vite Configuration Reference](https://vite.dev/config/)
 - [Vue 3 Documentation](https://vuejs.org/)
 - [TypeScript Documentation](https://www.typescriptlang.org/)

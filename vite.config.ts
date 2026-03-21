@@ -1,27 +1,162 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { defineConfig } from 'vite-plus'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueDevTools(),
-  ],
+  lint: {
+    plugins: ['oxc', 'typescript', 'unicorn', 'react', 'vue'],
+    categories: {
+      correctness: 'warn',
+    },
+    env: {
+      builtin: true,
+    },
+    ignorePatterns: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+    rules: {
+      'vue/no-arrow-functions-in-watch': 'error',
+      'vue/no-deprecated-destroyed-lifecycle': 'error',
+      'vue/no-export-in-script-setup': 'error',
+      'vue/no-lifecycle-after-await': 'error',
+      'vue/prefer-import-from-vue': 'error',
+      'vue/valid-define-emits': 'error',
+      'vue/valid-define-props': 'error',
+      '@typescript-eslint/ban-ts-comment': 'error',
+      'no-array-constructor': 'error',
+      '@typescript-eslint/no-duplicate-enum-values': 'error',
+      '@typescript-eslint/no-empty-object-type': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-extra-non-null-assertion': 'error',
+      '@typescript-eslint/no-misused-new': 'error',
+      '@typescript-eslint/no-namespace': 'error',
+      '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+      '@typescript-eslint/no-require-imports': 'error',
+      '@typescript-eslint/no-this-alias': 'error',
+      '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+      '@typescript-eslint/no-unsafe-declaration-merging': 'error',
+      '@typescript-eslint/no-unsafe-function-type': 'error',
+      'no-unused-expressions': 'error',
+      'no-unused-vars': 'error',
+      '@typescript-eslint/no-wrapper-object-types': 'error',
+      '@typescript-eslint/prefer-as-const': 'error',
+      '@typescript-eslint/prefer-namespace-keyword': 'error',
+      '@typescript-eslint/triple-slash-reference': 'error',
+    },
+    overrides: [
+      {
+        files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts', '**/*.vue'],
+        rules: {
+          'constructor-super': 'off',
+          'getter-return': 'off',
+          'no-class-assign': 'off',
+          'no-const-assign': 'off',
+          'no-dupe-class-members': 'off',
+          'no-dupe-keys': 'off',
+          'no-func-assign': 'off',
+          'no-import-assign': 'off',
+          'no-new-native-nonconstructor': 'off',
+          'no-obj-calls': 'off',
+          'no-redeclare': 'off',
+          'no-setter-return': 'off',
+          'no-this-before-super': 'off',
+          'no-undef': 'off',
+          'no-unreachable': 'off',
+          'no-unsafe-negation': 'off',
+          'no-var': 'error',
+          'no-with': 'off',
+          'prefer-const': 'error',
+          'prefer-rest-params': 'error',
+          'prefer-spread': 'error',
+        },
+      },
+      {
+        files: ['src/**/__tests__/*'],
+        plugins: ['vitest'],
+        rules: {
+          'vitest/expect-expect': 'error',
+          'vitest/no-conditional-expect': 'error',
+          'vitest/no-disabled-tests': 'warn',
+          'vitest/no-focused-tests': 'error',
+          'vitest/no-commented-out-tests': 'error',
+          'vitest/no-identical-title': 'error',
+          'vitest/no-import-node-test': 'error',
+          'vitest/no-interpolation-in-snapshots': 'error',
+          'vitest/no-mocks-import': 'error',
+          'vitest/no-standalone-expect': 'error',
+          'vitest/no-unneeded-async-expect-function': 'error',
+          'vitest/require-local-test-context-for-concurrent-snapshots': 'error',
+          'vitest/valid-describe-callback': 'error',
+          'vitest/valid-expect': 'error',
+        },
+      },
+      {
+        files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+        jsPlugins: ['eslint-plugin-playwright'],
+        env: {
+          'shared-node-browser': true,
+        },
+        rules: {
+          'no-empty-pattern': 'off',
+          'playwright/expect-expect': 'off',
+          'playwright/max-nested-describe': 'warn',
+          'playwright/missing-playwright-await': 'error',
+          'playwright/no-conditional-expect': 'warn',
+          'playwright/no-conditional-in-test': 'warn',
+          'playwright/no-duplicate-hooks': 'warn',
+          'playwright/no-element-handle': 'warn',
+          'playwright/no-eval': 'warn',
+          'playwright/no-focused-test': 'error',
+          'playwright/no-force-option': 'warn',
+          'playwright/no-nested-step': 'warn',
+          'playwright/no-networkidle': 'error',
+          'playwright/no-page-pause': 'warn',
+          'playwright/no-skipped-test': 'warn',
+          'playwright/no-standalone-expect': 'error',
+          'playwright/no-unsafe-references': 'error',
+          'playwright/no-unused-locators': 'error',
+          'playwright/no-useless-await': 'warn',
+          'playwright/no-useless-not': 'warn',
+          'playwright/no-wait-for-navigation': 'error',
+          'playwright/no-wait-for-selector': 'warn',
+          'playwright/no-wait-for-timeout': 'warn',
+          'playwright/prefer-hooks-in-order': 'warn',
+          'playwright/prefer-hooks-on-top': 'warn',
+          'playwright/prefer-locator': 'warn',
+          'playwright/prefer-to-have-count': 'warn',
+          'playwright/prefer-to-have-length': 'warn',
+          'playwright/prefer-web-first-assertions': 'error',
+          'playwright/valid-describe-callback': 'error',
+          'playwright/valid-expect': 'error',
+          'playwright/valid-expect-in-promise': 'error',
+          'playwright/valid-test-tags': 'error',
+          'playwright/valid-title': 'error',
+        },
+      },
+    ],
+  },
+  fmt: {
+    semi: false,
+    singleQuote: true,
+    printWidth: 100,
+    sortPackageJson: false,
+    ignorePatterns: [],
+  },
+  test: {
+    environment: 'jsdom',
+    exclude: ['**/node_modules/**', '**/.git/**', 'e2e/**'],
+    root: fileURLToPath(new URL('./', import.meta.url)),
+  },
+  plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   server: {
     watch: {
-      ignored: [
-        '**/test-results/**',
-        '**/playwright-report/**',
-        '**/e2e-results/**'
-      ]
-    }
+      ignored: ['**/test-results/**', '**/playwright-report/**', '**/e2e-results/**'],
+    },
   },
 })
