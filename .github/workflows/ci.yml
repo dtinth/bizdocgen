@@ -105,12 +105,17 @@ jobs:
           # Install Rclone
           curl https://rclone.org/install.sh | sudo bash
 
-          # Upload playwright report
+          # Upload playwright report (keyed by run ID — ephemeral)
           rclone copy playwright-report/ publish:$PUBLISH_BUCKET/$PUBLISH_KEY/playwright-report/ --progress
+
+          # Upload storyboards (keyed by branch — stable URL)
+          rclone copy e2e-results/storyboards/ publish:$PUBLISH_BUCKET/$STORYBOARD_KEY/storyboards/ --progress
 
           # Print report URL for CI logs
           REPORT_URL="$REPORT_URL_PREFIX/$PUBLISH_KEY/playwright-report/index.html"
+          STORYBOARD_URL="$REPORT_URL_PREFIX/$STORYBOARD_KEY/storyboards"
           echo "📊 Test report published: $REPORT_URL"
+          echo "🎬 Storyboards published: $STORYBOARD_URL"
 
           # Generate preview URL and add to step summary
           echo "## 📊 Test Results Published" >> $GITHUB_STEP_SUMMARY
@@ -121,10 +126,13 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "🔗 **[View Test Report]($REPORT_URL)**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🎬 **Storyboards** (stable, branch-keyed): \`$STORYBOARD_URL\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "📦 Fallback: Download artifacts below if S3 link is unavailable" >> $GITHUB_STEP_SUMMARY
         env:
           PUBLISH_BUCKET: ghartifacts
           PUBLISH_KEY: ${{ github.repository }}/${{ github.run_id }}-${{ github.run_attempt }}
+          STORYBOARD_KEY: ${{ github.repository }}/branches/${{ github.ref_name }}
           REPORT_URL_PREFIX: https://ghartifacts.t3.storage.dev
           RCLONE_CONFIG_PUBLISH_TYPE: s3
           RCLONE_CONFIG_PUBLISH_PROVIDER: Other
