@@ -42,18 +42,12 @@
     "jsdom": "^27.1.0",
     "npm-run-all2": "^8.0.4",
     "typescript": "~5.9.3",
-    "vite": "npm:@voidzero-dev/vite-plus-core@0.1.13",
     "vite-plugin-vue-devtools": "^8.0.0",
     "vite-plus": "^0.1.13",
-    "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.13",
     "vue-tsc": "^3.0.4"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },
-  "packageManager": "bun@1.2.19",
-  "overrides": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@0.1.13",
-    "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.13"
-  }
+  "packageManager": "bun@1.2.19"
 }
