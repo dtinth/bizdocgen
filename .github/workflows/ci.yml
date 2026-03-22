@@ -126,7 +126,12 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "🔗 **[View Test Report]($REPORT_URL)**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🎬 **Storyboards** (stable, branch-keyed): \`$STORYBOARD_URL\`" >> $GITHUB_STEP_SUMMARY
+          echo "🎬 **Storyboards** (stable, branch-keyed):" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          for f in e2e-results/storyboards/*.ndjson; do
+            name=$(basename "$f")
+            echo "- \`$STORYBOARD_URL/$name\`" >> $GITHUB_STEP_SUMMARY
+          done
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📦 Fallback: Download artifacts below if S3 link is unavailable" >> $GITHUB_STEP_SUMMARY
         env:
