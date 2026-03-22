@@ -18,11 +18,25 @@ test('actually works with Grist', async ({ page }) => {
   const fileChooser = await fileChooserPromise
   await fileChooser.setFiles('template.grist')
 
-  // 2. Post-action: Documents table loaded
-  await page
-    .getByRole('navigation', { name: 'Document pages' })
-    .getByRole('link', { name: 'Documents' })
-    .click()
+  // 2. Post-action: Providers table (already on this page after import)
+  const docNav = page.getByRole('navigation', { name: 'Document pages' })
+  // Click the main grid area to dismiss the page rename textbox that Grist
+  // activates on the first page after import
+  await page.locator('.gridview_data_scroll').first().click()
+  await storyboard.capture('Providers table', page)
+
+  // 3. Post-action: Clients table
+  await docNav.getByRole('link', { name: 'Clients' }).click()
+  await expect(page.locator('.gridview_data_scroll')).toBeVisible()
+  await storyboard.capture('Clients table', page)
+
+  // 4. Post-action: Payment Methods table
+  await docNav.getByRole('link', { name: 'Payment Methods' }).click()
+  await expect(page.locator('.gridview_data_scroll')).toBeVisible()
+  await storyboard.capture('Payment Methods table', page)
+
+  // 5. Post-action: Documents table loaded
+  await docNav.getByRole('link', { name: 'Documents' }).click()
   await expect(page.getByText('Preview & Print')).toBeVisible()
   await storyboard.capture('Documents table', page)
 
