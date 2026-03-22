@@ -40,25 +40,17 @@ test('actually works with Grist', async ({ page }) => {
   await expect(page.getByText('Preview & Print')).toBeVisible()
   await storyboard.capture('Documents table', page)
 
-  // 3. Pre-action: Preview & Print row
-  await expect(page.getByText('Preview & Print')).toBeVisible()
-  await storyboard.capture('Preview & Print row', page.getByText('Preview & Print'))
   await page.getByText('Preview & Print').click()
 
-  // 4. Post-action + pre-action combined: Widget panel with URL filled in
+  // Widget panel: fill custom URL and capture the textbox
   const widgetPanel = page.getByRole('tabpanel', { name: 'Widget' })
-  await expect(widgetPanel.getByRole('textbox', { name: 'Enter Custom URL' })).toBeVisible()
-  await widgetPanel
-    .getByRole('textbox', { name: 'Enter Custom URL' })
-    .fill(process.env.CI ? 'http://localhost:4173' : 'http://localhost:5173')
-  await storyboard.capture('Widget panel with URL', widgetPanel)
+  const urlTextbox = widgetPanel.getByRole('textbox', { name: 'Enter Custom URL' })
+  await expect(urlTextbox).toBeVisible()
+  await urlTextbox.fill(process.env.CI ? 'http://localhost:4173' : 'http://localhost:5173')
+  await storyboard.capture('Widget panel with URL', urlTextbox)
   await page.keyboard.press('Enter')
 
-  // 5. Post-action: Access confirmation dialog
-  await expect(page.getByRole('checkbox', { name: 'I confirm that I understand' })).toBeVisible()
-  await storyboard.capture('Access confirmation dialog', page.getByRole('checkbox', { name: 'I confirm that I understand' }))
-
-  // 6. Pre-action: Confirm button
+  // Pre-action: Confirm button
   await page.getByRole('checkbox', { name: 'I confirm that I understand' }).check()
   await expect(page.getByRole('button', { name: 'Confirm' })).toBeVisible()
   await storyboard.capture('Confirm button', page.getByRole('button', { name: 'Confirm' }))
