@@ -102,14 +102,13 @@ jobs:
       - name: Publish test results to object storage
         continue-on-error: true
         run: |
-          # Install Rclone
-          curl https://rclone.org/install.sh | sudo bash
+          RCLONE="mise exec rclone@1.73.2 -- rclone"
 
           # Upload playwright report (keyed by run ID — ephemeral)
-          rclone copy playwright-report/ publish:$PUBLISH_BUCKET/$PUBLISH_KEY/playwright-report/ --progress
+          $RCLONE copy playwright-report/ publish:$PUBLISH_BUCKET/$PUBLISH_KEY/playwright-report/ --progress
 
           # Upload storyboards (keyed by branch — stable URL)
-          rclone copy test-storyboards/ publish:$PUBLISH_BUCKET/$STORYBOARD_KEY/storyboards/ --progress
+          $RCLONE copy test-storyboards/ publish:$PUBLISH_BUCKET/$STORYBOARD_KEY/storyboards/ --progress
 
           # Print report URL for CI logs
           REPORT_URL="$REPORT_URL_PREFIX/$PUBLISH_KEY/playwright-report/index.html"
