@@ -109,7 +109,7 @@ jobs:
           rclone copy playwright-report/ publish:$PUBLISH_BUCKET/$PUBLISH_KEY/playwright-report/ --progress
 
           # Upload storyboards (keyed by branch — stable URL)
-          rclone copy e2e-results/storyboards/ publish:$PUBLISH_BUCKET/$STORYBOARD_KEY/storyboards/ --progress
+          rclone copy test-storyboards/ publish:$PUBLISH_BUCKET/$STORYBOARD_KEY/storyboards/ --progress
 
           # Print report URL for CI logs
           REPORT_URL="$REPORT_URL_PREFIX/$PUBLISH_KEY/playwright-report/index.html"
@@ -128,9 +128,9 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "🎬 **Storyboards** (stable, branch-keyed):" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          for f in e2e-results/storyboards/*.ndjson; do
-            name=$(basename "$f")
-            echo "- \`$STORYBOARD_URL/$name\`" >> $GITHUB_STEP_SUMMARY
+          for f in test-storyboards/*/storyboard.ndjson; do
+            slug=$(basename "$(dirname "$f")")
+            echo "- [\`$slug\`]($STORYBOARD_URL/$slug/storyboard.ndjson)" >> $GITHUB_STEP_SUMMARY
           done
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📦 Fallback: Download artifacts below if S3 link is unavailable" >> $GITHUB_STEP_SUMMARY
