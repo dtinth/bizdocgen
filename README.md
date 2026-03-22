@@ -33,7 +33,7 @@ For self-managed Grist, download the template file from this repository and impo
 2. Open the template in your Grist account.
 
 > [!TIP]
-> You can [self‑host](https://support.getgrist.com/self-managed/) your own Grist instance for better data sovereignty, unlimited rows, and unlimited API rate limit.
+> You can [self‑host](https://support.getgrist.com/self-managed/) your own Grist instance for better data sovereignty, unlimited rows, and no API rate limits.
 
 ## Technology Stack
 
