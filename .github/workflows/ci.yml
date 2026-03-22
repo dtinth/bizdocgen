@@ -130,7 +130,9 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           for f in test-storyboards/*/storyboard.ndjson; do
             slug=$(basename "$(dirname "$f")")
-            echo "- [\`$slug\`]($STORYBOARD_URL/$slug/storyboard.ndjson)" >> $GITHUB_STEP_SUMMARY
+            ndjson_url="$STORYBOARD_URL/$slug/storyboard.ndjson"
+            viewer_url="https://visual-storyboard.vercel.app/?url=$ndjson_url"
+            echo "- [\`$slug\`]($viewer_url)" >> $GITHUB_STEP_SUMMARY
           done
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📦 Fallback: Download artifacts below if S3 link is unavailable" >> $GITHUB_STEP_SUMMARY
