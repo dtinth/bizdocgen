@@ -42,7 +42,7 @@
     "jsdom": "^27.1.0",
     "npm-run-all2": "^8.0.4",
     "typescript": "~5.9.3",
-    "visual-storyboard": "^0.1.2",
+    "visual-storyboard": "^0.3.0",
     "vite-plugin-vue-devtools": "^8.0.0",
     "vite-plus": "^0.1.13",
     "vue-tsc": "^3.0.4"
