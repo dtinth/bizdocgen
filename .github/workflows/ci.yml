@@ -51,6 +51,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Set up Mise
+        uses: jdx/mise-action@v4
+
       - name: Setup Vite+
         uses: voidzero-dev/setup-vp@v1
         with:
