@@ -54,6 +54,7 @@ test("actually works with Grist", async ({ page }) => {
     await storyboard.capture("Close creator panel", btn);
     await btn.click();
     await stabilize(btn);
+    await storyboard.capture("Creator panel closed", btn);
   });
 
   const grist = new GristTester(page);

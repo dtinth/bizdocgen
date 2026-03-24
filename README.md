@@ -10,6 +10,11 @@ Currently supports 3 types of documents:
 - **Invoice** (ใบแจ้งหนี้)
 - **Receipt** (ใบเสร็จรับเงิน)
 
+Features:
+
+- Withholding tax (ภาษีหัก ณ ที่จ่าย)
+- PromptPay with QR code in invoice
+
 I use it when dealing with event sponsorships and occasional consulting work, while my friends use it for issuing [business documents related to freelance work](https://mennstudio.com/2014/design-business-forms/).
 
 ## Set up
