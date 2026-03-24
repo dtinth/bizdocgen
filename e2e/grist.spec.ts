@@ -46,6 +46,18 @@ test("actually works with Grist", async ({ page }) => {
     await page.screenshot({ path: `e2e-results/grist-integration.png` });
   });
 
+  await test.step("Add a row", async () => {
+    const newCell = page
+      .locator('.view_leaf:has(.viewsection_title:has-text("Documents")) .record-add .field')
+      .first();
+    await newCell.dblclick();
+    const docType = page.locator('.test-choice-editor-item:has-text("Quotation")');
+    await expect(docType).toBeVisible();
+    await page.keyboard.type("q");
+    await storyboard.capture("Select document type", docType);
+    await page.keyboard.press("Tab");
+  });
+
   const docNav = page.getByRole("navigation", { name: "Document pages" });
   await docNav.getByRole("link", { name: "Providers" }).click();
   await expect(page.getByText("นาย โปร แก้ได้หมด").first()).toBeVisible();
