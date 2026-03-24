@@ -46,7 +46,8 @@ jobs:
     name: E2E Tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
+    permissions:
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -137,4 +138,4 @@ jobs:
           RCLONE_CONFIG_PUBLISH_SECRET_ACCESS_KEY: ${{ secrets.RCLONE_CONFIG_PUBLISH_SECRET_ACCESS_KEY }}
         if: always() && hashFiles('playwright-report/**/*') != ''
 
-      - run: npx 'github:dtinth/publish-storyboard#main' --input=test-storyboards
+      - uses: dtinth/publish-storyboard@main
