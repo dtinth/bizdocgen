@@ -1,8 +1,11 @@
 import { expect, test } from "@playwright/test";
+import { stabilize } from "pw-utilities";
+import { GristTester } from "./support/GristTester";
 import { storyboard } from "./support/storyboard";
 
+test.use({ deviceScaleFactor: 2, viewport: { width: 1680, height: 945 } });
+
 test("actually works with Grist", async ({ page }) => {
-  await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto("http://localhost:8484/");
   await page.getByRole("button", { name: "Add new" }).click();
 
@@ -19,7 +22,7 @@ test("actually works with Grist", async ({ page }) => {
     await fileChooser.setFiles("template.grist");
   });
 
-  const widget = page.frameLocator("iframe");
+  const customWidget = page.frameLocator("iframe");
 
   await test.step("Configure widget URL", async () => {
     await expect(page.getByText("Preview & Print")).toBeVisible();
@@ -34,28 +37,127 @@ test("actually works with Grist", async ({ page }) => {
     await expect(page.getByRole("button", { name: "Confirm" })).toBeVisible();
     await storyboard.capture("Confirm button", page.getByRole("button", { name: "Confirm" }));
     await page.getByRole("button", { name: "Confirm" }).click();
-    await expect(widget.getByRole("button", { name: "พิมพ์เอกสาร" }).first()).toBeVisible();
+    await expect(customWidget.getByRole("button", { name: "พิมพ์เอกสาร" }).first()).toBeVisible();
   });
 
   await test.step("View an invoice", async () => {
     const inv = page.getByText("INV-2025-EX1").first();
     await inv.click();
-    await expect(widget.getByText("ใบแจ้งหนี้").first()).toBeVisible();
-    await expect(widget.getByText("INV-2025-EX1").first()).toBeVisible();
+    await expect(customWidget.getByText("ใบแจ้งหนี้").first()).toBeVisible();
+    await expect(customWidget.getByText("INV-2025-EX1").first()).toBeVisible();
     await storyboard.capture("Widget showing document", page);
     await page.screenshot({ path: `e2e-results/grist-integration.png` });
   });
 
+  await test.step("Close creator panel", async () => {
+    const btn = page.getByRole("button", { name: "Open creator panel" });
+    await storyboard.capture("Close creator panel", btn);
+    await btn.click();
+    await stabilize(btn);
+  });
+
+  const grist = new GristTester(page);
+  const widget = grist.widget("Documents");
+
   await test.step("Add a row", async () => {
-    const newCell = page
-      .locator('.view_leaf:has(.viewsection_title:has-text("Documents")) .record-add .field')
-      .first();
+    const newCell = widget.newRecord.fieldsLocator.nth(0);
     await newCell.dblclick();
-    const docType = page.locator('.test-choice-editor-item:has-text("Quotation")');
-    await expect(docType).toBeVisible();
+    const docType = page
+      .locator(".test-choice-editor-item")
+      .filter({ hasText: "Quotation" })
+      .first();
     await page.keyboard.type("q");
+    await expect(docType).toBeVisible();
     await storyboard.capture("Select document type", docType);
     await page.keyboard.press("Tab");
+  });
+
+  const selectedRecord = widget.selectedRecord;
+  await test.step("Date column", async () => {
+    await expect(selectedRecord.selectedFieldLocator).toHaveText(/\d{4}-\d{2}-\d{2}/);
+    await storyboard.capture("Date column auto-filled", selectedRecord.selectedFieldLocator);
+    await page.keyboard.press("Tab");
+  });
+  await test.step("Number column", async () => {
+    await expect(selectedRecord.selectedFieldLocator).toHaveText(/\d{3}/);
+    await storyboard.capture("Number column auto-filled", selectedRecord.selectedFieldLocator);
+    await page.keyboard.press("Tab");
+  });
+  await test.step("Credit Term column", async () => {
+    await expect(selectedRecord.selectedFieldLocator).toHaveText(/^\s*$/);
+    await page.keyboard.press("Enter");
+    const choiceItem = page
+      .locator(".test-choice-editor-item")
+      .filter({ hasText: "7 วัน" })
+      .first();
+    await expect(choiceItem).toBeVisible();
+    await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("ArrowDown");
+    await storyboard.capture("Credit Term column", selectedRecord.selectedFieldLocator);
+    await page.keyboard.press("Tab");
+  });
+  await test.step("Provider column", async () => {
+    await expect(selectedRecord.selectedFieldLocator).toHaveText(/^\s*$/);
+    await page.keyboard.press("Enter");
+    const choiceItem = page.locator(".test-ref-editor-item").first();
+    await expect(choiceItem).toBeVisible();
+    await page.keyboard.press("ArrowDown");
+    await storyboard.capture("Provider column", selectedRecord.selectedFieldLocator);
+    await page.keyboard.press("Tab");
+  });
+  await test.step("Client column", async () => {
+    await expect(selectedRecord.selectedFieldLocator).toHaveText(/^\s*$/);
+    await page.keyboard.press("Enter");
+    const choiceItem = page.locator(".test-ref-editor-item").first();
+    await expect(choiceItem).toBeVisible();
+    await page.keyboard.press("ArrowDown");
+    await storyboard.capture("Client column", selectedRecord.selectedFieldLocator);
+    await page.keyboard.press("Tab");
+  });
+  await test.step("Tax column", async () => {
+    await expect(selectedRecord.selectedFieldLocator).toHaveText(/0%/);
+    await storyboard.capture("Tax column", selectedRecord.selectedFieldLocator);
+    await page.keyboard.type("-3%");
+    await page.keyboard.press("Tab");
+  });
+  await test.step("Payment Method column", async () => {
+    await expect(selectedRecord.selectedFieldLocator).toHaveText(/^\s*$/);
+    await page.keyboard.press("Enter");
+    const choiceItem = page.locator(".test-ref-editor-item").first();
+    await expect(choiceItem).toBeVisible();
+    await page.keyboard.press("ArrowDown");
+    await storyboard.capture("Payment Method column", selectedRecord.selectedFieldLocator);
+    await page.keyboard.press("Tab");
+  });
+  await test.step("Reference column", async () => {
+    await expect(selectedRecord.selectedFieldLocator).toHaveText(/^\s*$/);
+    await page.keyboard.press("Enter");
+    const choiceItem = page.locator(".test-ref-editor-item").first();
+    await expect(choiceItem).toBeVisible();
+    await storyboard.capture("Reference column", selectedRecord.selectedFieldLocator);
+    await page.keyboard.press("Tab");
+  });
+  await test.step("Items", async () => {
+    const itemsWidget = grist.widget("Items");
+    const newItemCell = itemsWidget.newRecord.fieldsLocator.nth(0);
+    await newItemCell.dblclick();
+    await page.keyboard.type("ค่าบริการ (ชั่วโมง)");
+    await page.keyboard.press("Tab");
+    const selectedItemRecord = itemsWidget.selectedRecord;
+
+    // Quantity is autofilled
+    await expect(selectedItemRecord.selectedFieldLocator).toHaveText("1");
+    await page.keyboard.type("2");
+    await page.keyboard.press("Tab");
+
+    // Fill in unit price
+    await expect(selectedItemRecord.selectedFieldLocator).toHaveText(/0\.00/);
+    await page.keyboard.type("480");
+    await page.keyboard.press("Tab");
+
+    // Subtotal is calculated
+    await expect(selectedItemRecord.selectedFieldLocator).toHaveText(/960\.00/);
+    await storyboard.capture("Add items", page);
   });
 
   const docNav = page.getByRole("navigation", { name: "Document pages" });

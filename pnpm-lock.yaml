@@ -81,6 +81,9 @@ importers:
       npm-run-all2:
         specifier: ^8.0.4
         version: 8.0.4
+      pw-utilities:
+        specifier: ^0.1.2
+        version: 0.1.2
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
@@ -2295,6 +2298,9 @@ packages:
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
+
+  pw-utilities@0.1.2:
+    resolution: {integrity: sha512-+CPMppSzddmmrRzR9qBMkyiLLHeFlinmLB7tor1YtwP5fGwFW/yosoMlCmzSt2+Z3CphU4DZqAkWWTXY9Iuahw==}
 
   qrcode@0.9.0:
     resolution: {integrity: sha512-hYt2K3Y4hiYnRofqToRFLvloifpZlocZyTggrFlaG8xRV5odlUkJgRGN8J+pBcdIVzQ0RIGyqfAOdsj4bioTug==}
@@ -4723,6 +4729,8 @@ snapshots:
   proto-list@1.2.4: {}
 
   punycode@2.3.1: {}
+
+  pw-utilities@0.1.2: {}
 
   qrcode@0.9.0:
     dependencies:
