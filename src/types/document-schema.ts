@@ -41,6 +41,13 @@ export const ItemSchema = z.object({
 
 export const DocumentTypeSchema = z.enum(['Quotation', 'Invoice', 'Receipt'])
 
+export const DocumentTypeListSchema = z.preprocess(
+  (value) => {
+    return Array.isArray(value) ? value : [value]
+  },
+  z.array(DocumentTypeSchema).length(1),
+)
+
 export const ReferenceSchema = z
   .object({
     Number: z.string(),
@@ -52,7 +59,7 @@ export const RecordDataSchema = z.object({
   Client: ClientSchema,
   Credit_Term: z.string().nullish(),
   Date: z.string(), // ISO date string
-  Document_Type: z.array(DocumentTypeSchema),
+  Document_Type: DocumentTypeListSchema,
   Items: z.array(ItemSchema),
   Number: z.string(),
   Payment_Method: PaymentMethodSchema.nullish(),
