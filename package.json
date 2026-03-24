@@ -12,7 +12,8 @@
     "build-only": "vp build",
     "type-check": "vue-tsc --build && tsc --project e2e",
     "lint": "vp lint . --fix",
-    "format": "vp fmt src/"
+    "format": "vp fmt src/",
+    "sync-template": "wget -Otemplate.grist 'https://bizdocgen.getgrist.com/api/docs/cq6sb6WHRMreH2SCAzhcmC/download?nohistory=true'"
   },
   "dependencies": {
     "@fontsource/sarabun": "^5.2.8",
