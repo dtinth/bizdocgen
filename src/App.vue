@@ -24,7 +24,7 @@ const {
   settingsRef,
   isCssChanged,
   saveCustomCss,
-  initializeGrist
+  initializeGrist,
 } = useAppState()
 
 onMounted(async () => {
@@ -34,7 +34,13 @@ onMounted(async () => {
 
 <template>
   <div class="app" data-testid="app">
-    <div v-if="isLoading" class="app__loading" data-testid="app-loading" role="status" aria-live="polite">
+    <div
+      v-if="isLoading"
+      class="app__loading"
+      data-testid="app-loading"
+      role="status"
+      aria-live="polite"
+    >
       กำลังโหลดข้อมูล...
     </div>
 
@@ -44,15 +50,26 @@ onMounted(async () => {
     </div>
 
     <div v-else-if="record" class="app__content" data-testid="app-content" role="main">
-      <ActionButtons :record="record" :raw-grist-data="rawGristData"
-        :disablePrint="!!record.Record.Signed_Document_URL" />
+      <ActionButtons
+        :record="record"
+        :raw-grist-data="rawGristData"
+        :disablePrint="!!record.Record.Signed_Document_URL"
+      />
       <div class="app__main-content">
         <template v-if="record.Record.Signed_Document_URL">
-          <div class="app__signed" data-testid="signed-document" role="document"
-            :data-document-number="record.Record.Number">
+          <div
+            class="app__signed"
+            data-testid="signed-document"
+            role="document"
+            :data-document-number="record.Record.Number"
+          >
             <p class="app__signed-text">เอกสารนี้ได้ถูกลงชื่อเรียบร้อยแล้ว</p>
-            <a class="app__signed-link" :href="record.Record.Signed_Document_URL" target="_blank"
-              rel="noopener noreferrer">
+            <a
+              class="app__signed-link"
+              :href="record.Record.Signed_Document_URL"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               🔗 ดาวน์โหลดเอกสารที่ลงชื่อแล้ว
             </a>
           </div>
@@ -63,29 +80,55 @@ onMounted(async () => {
       </div>
 
       <!-- CSS Settings Section -->
-      <div ref="settingsRef" class="app__settings" data-testid="settings-panel"
-        :class="{ 'app__settings--open': showSettings }">
+      <div
+        ref="settingsRef"
+        class="app__settings"
+        data-testid="settings-panel"
+        :class="{ 'app__settings--open': showSettings }"
+      >
         <div class="app__settings-header">
-          <button type="button" class="app__settings-toggle" data-testid="settings-toggle" :aria-expanded="showSettings"
-            aria-controls="settings-content" @click="showSettings = !showSettings">
+          <button
+            type="button"
+            class="app__settings-toggle"
+            data-testid="settings-toggle"
+            :aria-expanded="showSettings"
+            aria-controls="settings-content"
+            @click="showSettings = !showSettings"
+          >
             {{ showSettings ? '▼' : '▶' }} Custom CSS Settings
           </button>
         </div>
 
-        <div v-if="showSettings" id="settings-content" class="app__settings-content" data-testid="settings-content">
+        <div
+          v-if="showSettings"
+          id="settings-content"
+          class="app__settings-content"
+          data-testid="settings-content"
+        >
           <div class="app__settings-field">
-            <label for="custom-css" class="app__settings-label">
-              Custom CSS:
-            </label>
-            <textarea id="custom-css" v-model="customCss" class="app__settings-textarea"
-              data-testid="custom-css-textarea" aria-label="Custom CSS styles" placeholder=".document {
+            <label for="custom-css" class="app__settings-label"> Custom CSS: </label>
+            <textarea
+              id="custom-css"
+              v-model="customCss"
+              class="app__settings-textarea"
+              data-testid="custom-css-textarea"
+              aria-label="Custom CSS styles"
+              placeholder=".document {
   --font-family: Comic Sans MS, Itim, sans-serif;
-}" rows="10"></textarea>
+}"
+              rows="10"
+            ></textarea>
           </div>
 
           <div class="app__settings-actions">
-            <button type="button" class="app__settings-apply" data-testid="apply-settings-button"
-              aria-label="Apply custom CSS settings" :disabled="!isCssChanged" @click="saveCustomCss">
+            <button
+              type="button"
+              class="app__settings-apply"
+              data-testid="apply-settings-button"
+              aria-label="Apply custom CSS settings"
+              :disabled="!isCssChanged"
+              @click="saveCustomCss"
+            >
               Apply CSS
             </button>
           </div>

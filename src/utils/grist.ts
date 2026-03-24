@@ -71,7 +71,7 @@ class MockGristAPI implements GristAPI {
     setTimeout(() => {
       const urlParams = new URLSearchParams(window.location.search)
       const scenarioSlug = urlParams.get('scenario')
-      
+
       // Load scenario data if specified, otherwise load default sample
       if (scenarioSlug) {
         this.loadScenarioBySlug(scenarioSlug)
@@ -132,7 +132,7 @@ class MockGristAPI implements GristAPI {
   private loadScenarioBySlug(slug: string): void {
     // Dynamic import to avoid circular dependencies
     import('../utils/scenarios').then(({ scenarios }) => {
-      const scenario = scenarios.find(s => s.slug === slug)
+      const scenario = scenarios.find((s) => s.slug === slug)
       if (scenario && this.recordCallback) {
         this.recordCallback(scenario.data)
       } else {
@@ -192,7 +192,7 @@ class MockGristAPI implements GristAPI {
         id: 5,
       },
     }
-    
+
     if (this.recordCallback) {
       this.recordCallback(defaultSample)
     }

@@ -10,7 +10,8 @@
       <div class="signature__section">
         <div class="signature__text">อนุมัติโดย</div>
         <div class="signature__line"></div>
-        <div class="signature__name">...................................................................
+        <div class="signature__name">
+          ...................................................................
         </div>
         <div class="signature__date">วันที่ ....../....../.........</div>
       </div>
@@ -28,8 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { GristRecord } from '../types/document-schema';
+import { computed } from 'vue'
+import type { GristRecord } from '../types/document-schema'
 
 interface Props {
   record: GristRecord

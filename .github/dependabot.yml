@@ -2,41 +2,41 @@ version: 2
 enable-beta-ecosystems: true
 updates:
   # Enable version updates for npm
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 5
     groups:
       vue-ecosystem:
         patterns:
-          - "vue*"
-          - "@vue*"
-          - "vite*"
-          - "@vitejs*"
+          - 'vue*'
+          - '@vue*'
+          - 'vite*'
+          - '@vitejs*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
       testing:
         patterns:
-          - "*playwright*"
-          - "*vitest*"
-          - "@playwright*"
+          - '*playwright*'
+          - '*vitest*'
+          - '@playwright*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
       fonts:
         patterns:
-          - "@fontsource*"
+          - '@fontsource*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
 
   # Enable version updates for GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 3

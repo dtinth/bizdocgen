@@ -8,18 +8,22 @@
 
       <div v-if="taxInfo.label" class="tax-summary__row">
         <div class="tax-summary__label">{{ taxInfo.label }}</div>
-        <div class="tax-summary__amount" :class="{ 'tax-summary__amount--negative': taxInfo.percentage < 0 }">
-          {{ taxInfo.percentage < 0 ? '-' : '' }}{{ formatCurrency(Math.abs(taxInfo.amount)) }} </div>
-        </div>
-
-        <div class="tax-summary__row tax-summary__row--total">
-          <div class="tax-summary__label">จำนวนเงินสุทธิ</div>
-          <div class="tax-summary__amount">
-            {{ formatCurrency(total) }}
-            <div class="tax-summary__baht-text">({{ formatBahtText(total) }})</div>
-          </div>
+        <div
+          class="tax-summary__amount"
+          :class="{ 'tax-summary__amount--negative': taxInfo.percentage < 0 }"
+        >
+          {{ taxInfo.percentage < 0 ? '-' : '' }}{{ formatCurrency(Math.abs(taxInfo.amount)) }}
         </div>
       </div>
+
+      <div class="tax-summary__row tax-summary__row--total">
+        <div class="tax-summary__label">จำนวนเงินสุทธิ</div>
+        <div class="tax-summary__amount">
+          {{ formatCurrency(total) }}
+          <div class="tax-summary__baht-text">({{ formatBahtText(total) }})</div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 

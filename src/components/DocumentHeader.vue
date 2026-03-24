@@ -4,8 +4,12 @@
       <h1 class="document-header__provider-name">{{ record.Record.Provider.Name }}</h1>
       <div class="document-header__provider-details">
         <div
-          v-if="record.Record.Provider.Personnel_Name && record.Record.Provider.Personnel_Name !== record.Record.Provider.Name"
-          class="document-header__personnel">
+          v-if="
+            record.Record.Provider.Personnel_Name &&
+            record.Record.Provider.Personnel_Name !== record.Record.Provider.Name
+          "
+          class="document-header__personnel"
+        >
           {{ record.Record.Provider.Personnel_Name }}
         </div>
         <div class="document-header__address">

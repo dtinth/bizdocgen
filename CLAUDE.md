@@ -91,8 +91,8 @@ src/
 ```typescript
 // Preferred: DOM event-based mocking (realistic, no test pollution)
 await page.evaluate((data) => {
-  document.dispatchEvent(new CustomEvent("mockgristrecord", { detail: data }));
-}, mockData);
+  document.dispatchEvent(new CustomEvent('mockgristrecord', { detail: data }))
+}, mockData)
 
 // Avoid: Injection-based mocking (invasive, breaks encapsulation)
 ```
@@ -148,7 +148,7 @@ Users can apply custom CSS through the settings panel:
 ```css
 /* Change document font */
 .document {
-  --font-family: "Comic Sans MS", Itim, sans-serif;
+  --font-family: 'Comic Sans MS', Itim, sans-serif;
 }
 
 /* Customize table headers */

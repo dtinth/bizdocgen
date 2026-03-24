@@ -7,14 +7,12 @@ export const PaymentMethodSchema = z.object({
   Branch: z.string().nullish(),
   Name: z.string(), // Internal use only, not displayed
   PromptPay: z.string().nullish(),
-  id: z.number(),
 })
 
 export const ClientSchema = z.object({
   Address: z.string(),
   Name: z.string(),
   Tax_ID: z.string(),
-  id: z.number(),
 })
 
 export const ProviderSchema = z.object({
@@ -23,15 +21,10 @@ export const ProviderSchema = z.object({
   Name: z.string(), // Brand name
   Personnel_Name: z.string().nullish(), // Optional, for signature (ลงชื่อ)
   Tax_ID: z.string(),
-  id: z.number(),
 })
 
 export const ItemSchema = z.object({
   Description: z.string(),
-  Document: z.object({
-    tableId: z.string(),
-    rowId: z.number(),
-  }),
   Manual_Sort: z.number().nullish(),
   Quantity: z.number(),
   Total: z.number(),
@@ -41,17 +34,13 @@ export const ItemSchema = z.object({
 
 export const DocumentTypeSchema = z.enum(['Quotation', 'Invoice', 'Receipt'])
 
-export const DocumentTypeListSchema = z.preprocess(
-  (value) => {
-    return Array.isArray(value) ? value : [value]
-  },
-  z.array(DocumentTypeSchema).length(1),
-)
+export const DocumentTypeListSchema = z.preprocess((value) => {
+  return Array.isArray(value) ? value : [value]
+}, z.array(DocumentTypeSchema).length(1))
 
 export const ReferenceSchema = z
   .object({
     Number: z.string(),
-    id: z.number(),
   })
   .nullish()
 
@@ -68,7 +57,6 @@ export const RecordDataSchema = z.object({
   Remarks: z.string().nullish(),
   Tax: z.number(),
   Signed_Document_URL: z.union([z.url(), z.literal('')]).nullish(),
-  id: z.number(),
 })
 
 export const GristRecordSchema = z.object({

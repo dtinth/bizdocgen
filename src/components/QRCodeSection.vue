@@ -56,7 +56,7 @@ watch(
   () => [promptPayId.value, viewModel.value.total],
   () => {
     generateQRCode()
-  }
+  },
 )
 </script>
 

@@ -1,33 +1,36 @@
 <template>
   <div class="action-buttons action-buttons--print-hidden" data-testid="action-buttons">
     <div v-if="isGristMocked" class="action-buttons__scenario">
-      <select 
-        id="scenario-select" 
-        v-model="selectedScenarioSlug" 
+      <select
+        id="scenario-select"
+        v-model="selectedScenarioSlug"
         class="action-buttons__select"
         data-testid="scenario-selector"
         aria-label="เลือกตัวอย่างเอกสาร"
-        @change="onScenarioChange">
+        @change="onScenarioChange"
+      >
         <option value="">— เลือกตัวอย่าง —</option>
         <option v-for="s in scenarios" :key="s.slug" :value="s.slug">{{ s.title }}</option>
       </select>
     </div>
 
-    <button 
-      type="button" 
-      class="action-buttons__button action-buttons__button--primary" 
+    <button
+      type="button"
+      class="action-buttons__button action-buttons__button--primary"
       data-testid="print-button"
       aria-label="พิมพ์เอกสาร"
       @click="handlePrint"
-      :disabled="props.disablePrint">
+      :disabled="props.disablePrint"
+    >
       🖨️ พิมพ์เอกสาร
     </button>
-    <button 
-      type="button" 
+    <button
+      type="button"
       class="action-buttons__button action-buttons__button--secondary"
-      data-testid="copy-json-button" 
+      data-testid="copy-json-button"
       aria-label="คัดลอกข้อมูล JSON"
-      @click="handleCopyJson">
+      @click="handleCopyJson"
+    >
       📋 คัดลอก JSON
     </button>
   </div>
@@ -72,9 +75,11 @@ function onScenarioChange() {
   const s = scenarios.find((x) => x.slug === selectedScenarioSlug.value)
   if (s) {
     // Dispatch DOM event to communicate with mock Grist API
-    document.dispatchEvent(new CustomEvent('mockgristrecord', {
-      detail: s.data
-    }))
+    document.dispatchEvent(
+      new CustomEvent('mockgristrecord', {
+        detail: s.data,
+      }),
+    )
   }
 }
 </script>

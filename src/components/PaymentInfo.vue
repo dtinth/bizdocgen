@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GristRecord } from '../types/document-schema';
+import type { GristRecord } from '../types/document-schema'
 
 interface Props {
   record: GristRecord

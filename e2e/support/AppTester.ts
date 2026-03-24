@@ -67,7 +67,6 @@ export class AppTester extends PageObject {
     await expect(this.content).toBeVisible()
   }
 
-
   // Generic helpers
   async expectTextVisible(text: string) {
     await expect(this.page.getByText(text)).toBeVisible()
@@ -88,30 +87,33 @@ export class AppTester extends PageObject {
       content: `
         .action-buttons { display: none !important; }
         .app__settings { display: none !important; }
-      `
+      `,
     })
   }
 
   async takeScreenshot(filename: string) {
     await this.page.screenshot({
       path: `e2e-results/${filename}`,
-      fullPage: true
+      fullPage: true,
     })
   }
 
   async takeDocumentScreenshot(filename: string) {
     // Screenshot either the document or signed document element using test IDs
-    const documentElement = await this.page.getByTestId('document').first().isVisible()
+    const documentElement = await this.page
+      .getByTestId('document')
+      .first()
+      .isVisible()
       .catch(() => false)
-    
+
     if (documentElement) {
       await this.page.getByTestId('document').screenshot({
-        path: `e2e-results/${filename}`
+        path: `e2e-results/${filename}`,
       })
     } else {
       // Fall back to signed document
       await this.page.getByTestId('signed-document').screenshot({
-        path: `e2e-results/${filename}`
+        path: `e2e-results/${filename}`,
       })
     }
   }
@@ -119,26 +121,28 @@ export class AppTester extends PageObject {
   // Scenario helpers
   async getAllScenarios() {
     await this.waitForContent()
-    
+
     // Get all scenario options from the select element
-    return await this.actionButtons.scenarioSelector.locator('option').evaluateAll(
-      (options) => options
-        .filter(opt => (opt as HTMLOptionElement).value) // Skip empty option
-        .map(opt => ({ 
-          slug: (opt as HTMLOptionElement).value, 
-          title: opt.textContent || (opt as HTMLOptionElement).value 
-        }))
+    return await this.actionButtons.scenarioSelector.locator('option').evaluateAll((options) =>
+      options
+        .filter((opt) => (opt as HTMLOptionElement).value) // Skip empty option
+        .map((opt) => ({
+          slug: (opt as HTMLOptionElement).value,
+          title: opt.textContent || (opt as HTMLOptionElement).value,
+        })),
     )
   }
 
   // Mock data helpers
   async dispatchMockRecord(data: unknown) {
     await this.page.evaluate((recordData) => {
-      document.dispatchEvent(new CustomEvent('mockgristrecord', {
-        detail: recordData
-      }))
+      document.dispatchEvent(
+        new CustomEvent('mockgristrecord', {
+          detail: recordData,
+        }),
+      )
     }, data)
-    
+
     // Wait for the document to fully load with the correct data
     if (data && typeof data === 'object' && 'Record' in data) {
       const record = (data as { Record?: { Number?: string } }).Record
@@ -150,9 +154,11 @@ export class AppTester extends PageObject {
 
   async dispatchInvalidData() {
     await this.page.evaluate(() => {
-      document.dispatchEvent(new CustomEvent('mockgristrecord', {
-        detail: { invalid: 'data' }
-      }))
+      document.dispatchEvent(
+        new CustomEvent('mockgristrecord', {
+          detail: { invalid: 'data' },
+        }),
+      )
     })
   }
 
