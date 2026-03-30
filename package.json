@@ -22,7 +22,7 @@
     "micromark": "^4.0.2",
     "promptpay-qr": "^0.5.0",
     "qrcode": "^1.5.4",
-    "vue": "^3.5.18",
+    "vue": "^3.5.31",
     "zod": "^4.1.12"
   },
   "devDependencies": {
