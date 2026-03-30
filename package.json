@@ -44,7 +44,7 @@
     "npm-run-all2": "^8.0.4",
     "pw-utilities": "^0.1.2",
     "typescript": "~5.9.3",
-    "visual-storyboard": "^0.3.0",
+    "visual-storyboard": "^0.3.6",
     "vite-plugin-vue-devtools": "^8.1.1",
     "vite-plus": "^0.1.14",
     "vue-tsc": "^3.0.4"
