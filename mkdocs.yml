@@ -1,0 +1,54 @@
+site_name: bizdocgen — เอกสารธุรกิจอัตโนมัติ
+site_description: เครื่องมือสร้างเอกสารธุรกิจ (ใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จรับเงิน) ผ่าน Grist
+site_url: https://dtinth.github.io/bizdocgen/
+
+repo_name: dtinth/bizdocgen
+repo_url: https://github.com/dtinth/bizdocgen
+
+theme:
+  name: material
+  language: th
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: เปลี่ยนเป็นโหมดมืด
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: เปลี่ยนเป็นโหมดสว่าง
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+
+nav:
+  - หน้าแรก: index.md
+  - เริ่มต้นใช้งาน: getting-started.md
+  - ฟีเจอร์: features.md
+  - โครงสร้างข้อมูล: data-structure.md
+  - การปรับแต่ง: customization.md
+  - สำหรับนักพัฒนา: development.md
+  - อ้างอิง — Grist Custom Widgets: grist-custom-widgets.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
