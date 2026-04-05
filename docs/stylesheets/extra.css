@@ -1,0 +1,30 @@
+/* Extra CSS for Thai documentation */
+
+/* Thai font support */
+body {
+  font-family: 'Sarabun', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Adjust line height for Thai text */
+.md-typeset {
+  line-height: 1.8;
+}
+
+/* Better spacing for Thai headings */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  line-height: 1.4;
+}
+
+/* Custom grid cards */
+.grid.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+/* Code block improvements for Thai */
+.md-typeset code {
+  font-family: 'Fira Code', 'JetBrains Mono', 'Sarabun', monospace;
+}

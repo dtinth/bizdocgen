@@ -1,0 +1,97 @@
+site_name: bizdocgen - คู่มือการใช้งาน
+site_description: คู่มือการใช้งาน bizdocgen สำหรับสร้างเอกสารทางธุรกิจบน Grist
+site_author: bizdocgen
+site_url: https://bizdocgen.readthedocs.io
+
+theme:
+  name: material
+  language: th
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: สลับไปโหมดมืด
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: สลับไปโหมดสว่าง
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: 
+        - th
+        - en
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/dtinth/bizdocgen
+  version:
+    provider: mike
+
+extra_css:
+  - stylesheets/extra.css
+
+copyright: |
+  &copy; 2025 bizdocgen | สงวนลิขสิทธิ์
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+  - pymdownx.emoji
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - def_list
+  - toc:
+      permalink: true
+
+nav:
+  - หน้าแรก: index.md
+  - เริ่มต้นใช้งาน:
+    - getting-started/index.md
+    - getting-started/hosted-grist.md
+    - getting-started/self-hosted.md
+  - คุณสมบัติ:
+    - features/index.md
+    - features/document-types.md
+    - features/tax.md
+    - features/promptpay.md
+  - ปรับแต่ง:
+    - customization/index.md
+    - customization/css-guide.md
+    - customization/examples.md
+  - การพัฒนา:
+    - development/index.md
+    - development/architecture.md
+    - development/api-reference.md
+  - อ้างอิง:
+    - reference/schema.md
+    - reference/faq.md
