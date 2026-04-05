@@ -2,7 +2,7 @@
 
 **เครื่องมือสร้างเอกสารธุรกิจอัตโนมัติ ผ่าน [Grist](https://www.getgrist.com/)**
 
-![ตัวอย่างเอกสาร](../example.png)
+![ตัวอย่างเอกสาร](example.png)
 
 ## bizdocgen คืออะไร?
 
