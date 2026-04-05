@@ -67,7 +67,9 @@ vp run test:e2e
 - นิยมใช้ semantic locators เช่น `getByTestId()`, `getByRole()`, `getByText()`
 
 !!! warning
-    มีชุดทดสอบ E2E บางส่วนที่ต้องพึ่ง Grist instance ภายนอกสำหรับ integration test โดยเฉพาะ ดังนั้นสภาพแวดล้อม CI หรือ local test อาจต้องเตรียมบริการเพิ่มเติมก่อนรันครบทุกเคส
+    ไฟล์ `e2e/grist.spec.ts` เป็น integration test ที่ต้องมี Grist instance อยู่ที่ `http://localhost:8484/` และต้องมี widget dev server พร้อมใช้งานที่ `http://localhost:5173` (หรือ `http://localhost:4173` ใน CI) ก่อนจึงจะรันผ่านได้
+
+สำหรับการพัฒนาแบบ local ถ้ายังไม่ได้เตรียม Grist instance คุณสามารถโฟกัสกับ unit tests และชุด E2E ที่ไม่พึ่งบริการภายนอกก่อนได้ แล้วค่อยรัน `grist.spec.ts` เมื่อ environment พร้อม
 
 ## แนวทางการขยายระบบ
 
