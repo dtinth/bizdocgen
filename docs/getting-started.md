@@ -13,7 +13,7 @@
 
 ## ใช้กับ Grist ของตัวเอง
 
-ถ้าคุณมี Grist instance ของตัวเอง ให้ใช้ไฟล์ `/home/runner/work/bizdocgen/bizdocgen/template.grist` เพื่อนำเข้าเป็นเทมเพลต
+ถ้าคุณมี Grist instance ของตัวเอง ให้ใช้ไฟล์ `template.grist` จาก repository เพื่อนำเข้าเป็นเทมเพลต
 
 1. ดาวน์โหลดไฟล์ `template.grist` จาก repository
 2. นำเข้าไฟล์เข้าไปใน Grist instance ของคุณ

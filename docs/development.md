@@ -14,12 +14,12 @@
 
 ## โครงสร้างสำคัญของโปรเจกต์
 
-- `/home/runner/work/bizdocgen/bizdocgen/src/App.vue` — จุดเริ่มต้นของ UI และแผงตั้งค่า Custom CSS
-- `/home/runner/work/bizdocgen/bizdocgen/src/composables/useAppState.ts` — state หลัก การเชื่อมกับ Grist และการโหลด/บันทึก custom CSS
-- `/home/runner/work/bizdocgen/bizdocgen/src/utils/grist.ts` — wrapper ของ Grist API และ mock implementation สำหรับ standalone mode
-- `/home/runner/work/bizdocgen/bizdocgen/src/types/document-schema.ts` — schema ของข้อมูลเอกสารด้วย Zod
-- `/home/runner/work/bizdocgen/bizdocgen/src/components/` — ชุด component ที่ประกอบกันเป็นเอกสารพร้อมพิมพ์
-- `/home/runner/work/bizdocgen/bizdocgen/src/utils/scenarios.ts` — ชุดข้อมูลตัวอย่างสำหรับการทดสอบและสาธิต
+- `src/App.vue` — จุดเริ่มต้นของ UI และแผงตั้งค่า Custom CSS
+- `src/composables/useAppState.ts` — state หลัก การเชื่อมกับ Grist และการโหลด/บันทึก custom CSS
+- `src/utils/grist.ts` — wrapper ของ Grist API และ mock implementation สำหรับ standalone mode
+- `src/types/document-schema.ts` — schema ของข้อมูลเอกสารด้วย Zod
+- `src/components/` — ชุด component ที่ประกอบกันเป็นเอกสารพร้อมพิมพ์
+- `src/utils/scenarios.ts` — ชุดข้อมูลตัวอย่างสำหรับการทดสอบและสาธิต
 
 ## วงจรการทำงาน
 
@@ -43,15 +43,15 @@
 ## คำสั่งที่ใช้บ่อย
 
 ```bash
-corepack pnpm install --frozen-lockfile
-npm run lint
-npm run build
-npm run test:unit
-npm run test:e2e
+vp install
+vp run lint
+vp run build
+vp run test:unit
+vp run test:e2e
 ```
 
 !!! note
-    คำสั่ง `npm run lint` และ `npm run build` จะเรียก `vp` ภายใน scripts ของโปรเจกต์ ดังนั้นควรติดตั้ง dependencies ก่อน
+    ถ้าคุณต้องการเรียกผ่าน `npm run ...` ก็ทำได้เช่นกัน แต่ scripts ภายในโปรเจกต์จะเรียก `vp` อยู่เบื้องหลัง จึงควรติดตั้ง dependencies ให้พร้อมก่อน
 
 ## การทดสอบ
 
