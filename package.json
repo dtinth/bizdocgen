@@ -22,7 +22,7 @@
     "micromark": "^4.0.2",
     "promptpay-qr": "^0.5.0",
     "qrcode": "^1.5.4",
-    "vue": "^3.5.31",
+    "vue": "^3.5.32",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -46,7 +46,7 @@
     "typescript": "~5.9.3",
     "visual-storyboard": "^0.3.6",
     "vite-plugin-vue-devtools": "^8.1.1",
-    "vite-plus": "^0.1.14",
+    "vite-plus": "^0.1.16",
     "vue-tsc": "^3.0.4"
   },
   "engines": {
