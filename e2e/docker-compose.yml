@@ -5,8 +5,8 @@ services:
     environment:
       - GRIST_IN_SERVICE=true
     ports:
-      - "8484:8484"
+      - '8484:8484'
     volumes:
-      - "grist:/persist"
+      - 'grist:/persist'
 volumes:
   grist:
