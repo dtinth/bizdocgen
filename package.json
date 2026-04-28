@@ -22,7 +22,7 @@
     "micromark": "^4.0.2",
     "promptpay-qr": "^0.5.0",
     "qrcode": "^1.5.4",
-    "vue": "^3.5.32",
+    "vue": "^3.5.33",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -35,7 +35,7 @@
     "@vitest/eslint-plugin": "^1.6.16",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
-    "@vue/test-utils": "^2.4.6",
+    "@vue/test-utils": "^2.4.9",
     "@vue/tsconfig": "^0.9.1",
     "eslint-plugin-playwright": "^2.10.2",
     "eslint-plugin-vue": "~10.8.0",
@@ -46,7 +46,7 @@
     "typescript": "~5.9.3",
     "visual-storyboard": "^0.3.6",
     "vite-plugin-vue-devtools": "^8.1.1",
-    "vite-plus": "^0.1.18",
+    "vite-plus": "^0.1.19",
     "vue-tsc": "^3.2.7"
   },
   "engines": {
