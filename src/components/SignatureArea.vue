@@ -2,12 +2,12 @@
   <footer class="signature">
     <!-- Quotation: Two signature boxes -->
     <div v-if="isQuotation" class="signature__grid">
-      <div class="signature__section">
+      <div class="signature__section" data-signature-type="issuer">
         <div class="signature__text">เสนอราคาโดย</div>
         <div class="signature__line"></div>
         <div class="signature__name">{{ displayName }}</div>
       </div>
-      <div class="signature__section">
+      <div class="signature__section" data-signature-type="approver">
         <div class="signature__text">อนุมัติโดย</div>
         <div class="signature__line"></div>
         <div class="signature__name">
@@ -19,7 +19,10 @@
 
     <!-- Invoice & Receipt: Single signature on right -->
     <div v-else class="signature__single">
-      <div class="signature__section signature__section--right">
+      <div
+        class="signature__section signature__section--right"
+        data-signature-type="issuer"
+      >
         <div class="signature__text">ลงชื่อ</div>
         <div class="signature__line"></div>
         <div class="signature__name">{{ displayName }}</div>
