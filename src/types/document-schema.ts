@@ -61,7 +61,16 @@ export const RecordDataSchema = z.object({
 
 export const GristRecordSchema = z.object({
   id: z.number(),
-  Record: RecordDataSchema,
+  Record: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      try {
+        return JSON.parse(val)
+      } catch {
+        return val
+      }
+    }
+    return val
+  }, RecordDataSchema),
 })
 
 // TypeScript types derived from Zod schemas

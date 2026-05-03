@@ -63,4 +63,20 @@ describe('GristRecordSchema', () => {
 
     expect(result.success).toBe(false)
   })
+
+  it('parses Record when it is a JSON string', () => {
+    const objectRecord = createRecord('Receipt')
+    const stringRecord = { id: 1, Record: JSON.stringify(objectRecord.Record) }
+    const parsed = GristRecordSchema.parse(stringRecord)
+
+    expect(parsed.Record.Document_Type).toEqual(['Receipt'])
+    expect(parsed.Record.Number).toBe('TEST-001')
+    expect(parsed.Record.Items).toHaveLength(1)
+  })
+
+  it('rejects Record when it is an invalid JSON string', () => {
+    const result = GristRecordSchema.safeParse({ id: 1, Record: 'not valid json' })
+
+    expect(result.success).toBe(false)
+  })
 })
