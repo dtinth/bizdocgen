@@ -149,4 +149,27 @@ test.describe('Grist Widget Functionality', () => {
       Record: expect.any(Object),
     })
   })
+
+  test('shows action buttons in More menu when Actions_Data is present', async ({ page }) => {
+    const app = new AppTester(page)
+
+    await app.goto()
+    await app.waitForContent()
+
+    // Select a quotation scenario that has Actions_Data
+    await app.actionButtons.selectScenario('quotation-cloud-consult')
+
+    // More button should be visible
+    await app.actionButtons.expectMoreButtonVisible()
+
+    // Open the menu
+    await app.actionButtons.openMoreMenu()
+
+    // Should show action buttons
+    await app.actionButtons.expectActionButtons(1)
+
+    // Close by clicking elsewhere
+    await page.locator('body').click({ position: { x: 0, y: 0 } })
+    await app.actionButtons.expectDropdownNotVisible()
+  })
 })

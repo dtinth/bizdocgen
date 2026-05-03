@@ -79,4 +79,48 @@ describe('GristRecordSchema', () => {
 
     expect(result.success).toBe(false)
   })
+
+  it('accepts Actions_Data as an optional field', () => {
+    const input = createRecord('Quotation')
+    const parsed = GristRecordSchema.parse({
+      ...input,
+      Record: {
+        ...input.Record,
+        Actions_Data: {
+          actions: [
+            {
+              title: 'สร้างใบแจ้งหนี้',
+              table: 'Documents',
+              record: { Document_Type: ['Invoice'], Number: 'INV-001' },
+              items: {
+                table: 'Items',
+                records: [{ Description: 'Test', Quantity: 1, Unit_Price: 100, Total: 100 }],
+              },
+            },
+          ],
+        },
+      },
+    } as unknown)
+
+    expect(parsed.Record.Actions_Data).toBeDefined()
+    expect(parsed.Record.Actions_Data!.actions).toHaveLength(1)
+    expect(parsed.Record.Actions_Data!.actions[0].title).toBe('สร้างใบแจ้งหนี้')
+  })
+
+  it('allows Actions_Data with zero actions', () => {
+    const input = createRecord('Quotation')
+    const parsed = GristRecordSchema.parse({
+      ...input,
+      Record: { ...input.Record, Actions_Data: { actions: [] } },
+    } as unknown)
+
+    expect(parsed.Record.Actions_Data).toBeDefined()
+    expect(parsed.Record.Actions_Data!.actions).toHaveLength(0)
+  })
+
+  it('handles record missing Actions_Data gracefully', () => {
+    const parsed = GristRecordSchema.parse(createRecord('Quotation'))
+
+    expect(parsed.Record.Actions_Data).toBeUndefined()
+  })
 })

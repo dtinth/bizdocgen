@@ -44,6 +44,22 @@ export const ReferenceSchema = z
   })
   .nullish()
 
+export const ActionItemSchema = z.object({
+  table: z.string(),
+  records: z.array(z.record(z.string(), z.unknown())),
+})
+
+export const ActionSchema = z.object({
+  title: z.string(),
+  table: z.string(),
+  record: z.record(z.string(), z.unknown()),
+  items: ActionItemSchema.optional(),
+})
+
+export const ActionsDataSchema = z.object({
+  actions: z.array(ActionSchema),
+})
+
 export const RecordDataSchema = z.object({
   Client: ClientSchema,
   Credit_Term: z.string().nullish(),
@@ -57,6 +73,7 @@ export const RecordDataSchema = z.object({
   Remarks: z.string().nullish(),
   Tax: z.number(),
   Signed_Document_URL: z.union([z.url(), z.literal('')]).nullish(),
+  Actions_Data: ActionsDataSchema.optional(),
 })
 
 export const GristRecordSchema = z.object({
@@ -82,3 +99,6 @@ export type DocumentType = z.infer<typeof DocumentTypeSchema>
 export type Reference = z.infer<typeof ReferenceSchema>
 export type RecordData = z.infer<typeof RecordDataSchema>
 export type GristRecord = z.infer<typeof GristRecordSchema>
+export type ActionItem = z.infer<typeof ActionItemSchema>
+export type Action = z.infer<typeof ActionSchema>
+export type ActionsData = z.infer<typeof ActionsDataSchema>

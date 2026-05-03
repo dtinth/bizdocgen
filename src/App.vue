@@ -23,9 +23,26 @@ const {
   showSettings,
   settingsRef,
   isCssChanged,
+  isExecutingAction,
+  actionsData,
   saveCustomCss,
   initializeGrist,
+  executeAction,
 } = useAppState()
+
+function handleCopyJson() {
+  if (rawGristData.value) {
+    navigator.clipboard
+      .writeText(JSON.stringify(rawGristData.value, null, 2))
+      .then(() => {
+        alert('JSON ถูกคัดลอกแล้ว')
+      })
+      .catch((err) => {
+        console.error('Failed to copy JSON:', err)
+        alert('ไม่สามารถคัดลอก JSON ได้')
+      })
+  }
+}
 
 onMounted(async () => {
   await initializeGrist()
@@ -51,9 +68,12 @@ onMounted(async () => {
 
     <div v-else-if="record" class="app__content" data-testid="app-content" role="main">
       <ActionButtons
-        :record="record"
         :raw-grist-data="rawGristData"
-        :disablePrint="!!record.Record.Signed_Document_URL"
+        :disable-print="!!record.Record.Signed_Document_URL"
+        :actions="actionsData?.actions ?? []"
+        :is-executing="isExecutingAction"
+        :on-execute-action="executeAction"
+        :on-copy-json="handleCopyJson"
       />
       <div class="app__main-content">
         <template v-if="record.Record.Signed_Document_URL">

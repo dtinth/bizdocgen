@@ -8,6 +8,19 @@ interface GristOptions {
 
 interface GristReadyOptions {
   onEditOptions?: () => void
+  requiredAccess?: 'none' | 'read table' | 'full'
+}
+
+interface NewRecord {
+  fields?: Record<string, unknown>
+}
+
+interface MinimalRecord {
+  id: number
+}
+
+interface TableOperations {
+  create: (record: NewRecord, options?: unknown) => Promise<MinimalRecord>
 }
 
 interface GristAPI {
@@ -16,6 +29,8 @@ interface GristAPI {
   onOptions: (callback: (options: GristOptions) => void) => void
   setOption: (key: string, value: unknown) => void
   getOption: (key: string) => unknown
+  getTable: (tableId?: string) => TableOperations
+  fetchSelectedRecord: (rowId: number) => Promise<Record<string, unknown>>
 }
 
 declare global {
@@ -29,6 +44,9 @@ const isInsideGrist = !!window.grist && window.parent !== window.self
 
 // Export flag for components to check if we're using mock
 export const isGristMocked = !isInsideGrist
+
+// In-memory store for mock created records
+const mockStore: Record<string, Record<string, unknown>[]> = {}
 
 // Mock Grist API implementation
 class MockGristAPI implements GristAPI {
@@ -127,6 +145,30 @@ class MockGristAPI implements GristAPI {
     } catch {
       return null
     }
+  }
+
+  getTable(_tableId?: string): TableOperations {
+    return {
+      create: async (record: NewRecord) => {
+        const id = Math.floor(Math.random() * 90000) + 10000
+        console.log(`[MockGrist] Created record in "${_tableId ?? 'Documents'}":`, record, `→ id=${id}`)
+        // Store the created record so fetchSelectedRecord can return it
+        if (_tableId && record.fields) {
+          mockStore[_tableId] ??= []
+          mockStore[_tableId]!.push({ id, ...record.fields })
+        }
+        return { id }
+      },
+    }
+  }
+
+  fetchSelectedRecord(rowId: number): Promise<Record<string, unknown>> {
+    const allRecords = [...(mockStore['Documents'] ?? [])]
+    const found = allRecords.find((r: Record<string, unknown>) => r.id === rowId)
+    if (found) {
+      return Promise.resolve(found)
+    }
+    return Promise.resolve({ id: rowId, Number: `DOC-${rowId}` })
   }
 
   private loadScenarioBySlug(slug: string): void {

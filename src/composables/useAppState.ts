@@ -1,5 +1,5 @@
 import { computed, nextTick, ref, watch } from 'vue'
-import type { GristRecord } from '../types/document-schema'
+import type { GristRecord, Action } from '../types/document-schema'
 import { GristRecordSchema } from '../types/document-schema'
 import { grist } from '../utils/grist'
 
@@ -8,6 +8,9 @@ const record = ref<GristRecord | null>(null)
 const rawGristData = ref<unknown>(null)
 const error = ref<string | null>(null)
 const isLoading = ref(true)
+
+// Action state
+const isExecutingAction = ref(false)
 
 // Settings state
 const customCss = ref<string>('')
@@ -24,6 +27,38 @@ export function useAppState() {
     customStyleElement = document.createElement('style')
     customStyleElement.id = 'grist-custom-css'
     document.head.appendChild(customStyleElement)
+  }
+
+  // Derive actions data from the record
+  const actionsData = computed(() => {
+    return record.value?.Record?.Actions_Data ?? null
+  })
+
+  // Execute an action (create records from Actions_Data)
+  async function executeAction(action: Action): Promise<void> {
+    if (isExecutingAction.value) return
+    isExecutingAction.value = true
+    try {
+      const tbl = grist.getTable(action.table)
+      const result = await tbl.create({ fields: action.record })
+      const newId = result.id
+
+      if (action.items?.records.length) {
+        const itemTbl = grist.getTable(action.items.table)
+        for (const item of action.items.records) {
+          await itemTbl.create({ fields: { ...item, Document: newId } })
+        }
+      }
+
+      const created = await grist.fetchSelectedRecord(newId)
+      const docNumber = (created as Record<string, unknown>).Number ?? `#${newId}`
+      alert(`✅ "${action.title}" completed: ${docNumber}`)
+    } catch (err) {
+      console.error('Failed to execute action:', err)
+      alert(`❌ ${err instanceof Error ? err.message : String(err)}`)
+    } finally {
+      isExecutingAction.value = false
+    }
   }
 
   // Check if CSS has been modified
@@ -83,6 +118,7 @@ export function useAppState() {
 
     grist.ready({
       onEditOptions: scrollToSettings,
+      requiredAccess: 'full',
     })
 
     // Handle record data
@@ -135,6 +171,10 @@ export function useAppState() {
     showSettings,
     settingsRef,
 
+    // Action state
+    isExecutingAction,
+    actionsData,
+
     // Computed
     isCssChanged,
 
@@ -144,5 +184,6 @@ export function useAppState() {
     scrollToSettings,
     initializeGrist,
     applyCustomCss,
+    executeAction,
   }
 }

@@ -19,8 +19,20 @@ export class ActionButtonsTester extends PageObject {
     return this.page.getByTestId('print-button')
   }
 
+  get moreButton() {
+    return this.page.getByTestId('more-button')
+  }
+
+  get dropdown() {
+    return this.page.getByTestId('more-dropdown')
+  }
+
   get copyJsonButton() {
     return this.page.getByTestId('copy-json-button')
+  }
+
+  get actionButtons() {
+    return this.page.getByTestId('action-button')
   }
 
   // Actions
@@ -37,8 +49,18 @@ export class ActionButtonsTester extends PageObject {
     await this.printButton.click()
   }
 
+  async openMoreMenu() {
+    await this.moreButton.click()
+  }
+
   async clickCopyJson() {
+    await this.openMoreMenu()
     await this.copyJsonButton.click()
+  }
+
+  async clickActionByTitle(title: string) {
+    await this.openMoreMenu()
+    await this.page.getByRole('menuitem', { name: title }).click()
   }
 
   // Mock helpers
@@ -70,5 +92,17 @@ export class ActionButtonsTester extends PageObject {
 
   async expectPrintButtonDisabled() {
     await expect(this.printButton).toBeDisabled()
+  }
+
+  async expectMoreButtonVisible() {
+    await expect(this.moreButton).toBeVisible()
+  }
+
+  async expectActionButtons(count: number) {
+    await expect(this.actionButtons).toHaveCount(count)
+  }
+
+  async expectDropdownNotVisible() {
+    await expect(this.dropdown).not.toBeVisible()
   }
 }

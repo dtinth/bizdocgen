@@ -173,6 +173,46 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         Remarks:
           '### หมายเหตุ\nใบเสนอราคานี้มีอายุ 30 วัน\n\n> หมายเหตุ: ถ้าลูกค้าหัวเราะระหว่างอบรม แปลว่าเข้าใจแล้ว',
         Tax: 0,
+        Actions_Data: {
+          actions: [
+            {
+              title: 'สร้างใบแจ้งหนี้',
+              table: 'Documents',
+              record: {
+                Document_Type: ['Invoice'],
+                Number: 'INV-2025-0099',
+                Date: '2025-05-15T00:00:00.000Z',
+                Client: 5,
+                Provider: 2,
+                Tax: 0,
+                Credit_Term: '30 วัน',
+                Remarks:
+                  '### หมายเหตุ\nใบเสนอราคานี้มีอายุ 30 วัน\n\n> หมายเหตุ: ถ้าลูกค้าหัวเราะระหว่างอบรม แปลว่าเข้าใจแล้ว',
+                Reference: { Number: 'QT-2025-0042' },
+              },
+              items: {
+                table: 'Items',
+                records: [
+                  {
+                    Description:
+                      '**ปรึกษาออกแบบระบบคลาวด์แบบไม่เครียด**\n- เลือกบริการที่คุ้มค่า\n- แผนรองรับการโตของระบบ',
+                    Manual_Sort: 1,
+                    Quantity: 1,
+                    Unit_Price: 48000,
+                    Total: 48000,
+                  },
+                  {
+                    Description: 'อบรมทีมให้ Deploy แบบเนียน ๆ',
+                    Manual_Sort: 2,
+                    Quantity: 1,
+                    Unit_Price: 48000,
+                    Total: 48000,
+                  },
+                ],
+              },
+            },
+          ],
+        },
       },
     },
   },
@@ -359,6 +399,44 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         Reference: null,
         Remarks: '### หมายเหตุ\nฟรีทดสอบพิมพ์หน้าแรก “สวัสดีออฟฟิศใหม่”',
         Tax: 0.07,
+        Actions_Data: {
+          actions: [
+            {
+              title: 'สร้างใบแจ้งหนี้',
+              table: 'Documents',
+              record: {
+                Document_Type: ['Invoice'],
+                Number: 'INV-2025-0100',
+                Date: '2025-04-25T00:00:00.000Z',
+                Client: 6,
+                Provider: 2,
+                Tax: 0.07,
+                Credit_Term: null,
+                Remarks: '### หมายเหตุ\nฟรีทดสอบพิมพ์หน้าแรก “สวัสดีออฟฟิศใหม่”',
+                Reference: { Number: 'QT-2025-0088' },
+              },
+              items: {
+                table: 'Items',
+                records: [
+                  {
+                    Description: 'ติดตั้งปริ้นเตอร์แบบเนียน ๆ (ไม่งอแง)',
+                    Manual_Sort: 1,
+                    Quantity: 2,
+                    Unit_Price: 12000,
+                    Total: 24000,
+                  },
+                  {
+                    Description: 'ลงไดรเวอร์ + แชร์ปริ้นเตอร์ในวง LAN',
+                    Manual_Sort: 2,
+                    Quantity: 1,
+                    Unit_Price: 6000,
+                    Total: 6000,
+                  },
+                ],
+              },
+            },
+          ],
+        },
       },
     },
   },
@@ -582,6 +660,45 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         Reference: null,
         Remarks: '### หมายเหตุ\nเน้นลงมือทำ ไม่เน้นสไลด์ยาว ๆ',
         Tax: 0,
+        Actions_Data: {
+          actions: [
+            {
+              title: 'สร้างใบแจ้งหนี้',
+              table: 'Documents',
+              record: {
+                Document_Type: ['Invoice'],
+                Number: 'INV-2025-0101',
+                Date: '2025-08-15T00:00:00.000Z',
+                Client: 7,
+                Provider: 2,
+                Tax: 0,
+                Credit_Term: null,
+                Remarks: '### หมายเหตุ\nเน้นลงมือทำ ไม่เน้นสไลด์ยาว ๆ',
+                Reference: { Number: 'QT-2025-0101' },
+              },
+              items: {
+                table: 'Items',
+                records: [
+                  {
+                    Description:
+                      'เขียนสคริปต์ `bash` อัตโนมัติ\n```bash\nfor f in *.csv; do\n  node transform.js "$f" > output/"$f"\ndone\n```',
+                    Manual_Sort: 1,
+                    Quantity: 1,
+                    Unit_Price: 18000,
+                    Total: 18000,
+                  },
+                  {
+                    Description: 'จัดเวิร์กช็อป 1 วัน\n- Git workflow\n- Review อย่างสร้างสรรค์',
+                    Manual_Sort: 2,
+                    Quantity: 1,
+                    Unit_Price: 48000,
+                    Total: 48000,
+                  },
+                ],
+              },
+            },
+          ],
+        },
       },
     },
   },
