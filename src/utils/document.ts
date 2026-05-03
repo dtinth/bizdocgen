@@ -8,14 +8,14 @@ export function sortItems(items: Item[]): Item[] {
   })
 }
 
-export function getDocumentTypeInThai(type: DocumentType): string {
+export function getDocumentTypeInThai(type: DocumentType, hasVat?: boolean): string {
   switch (type) {
     case 'Quotation':
       return 'ใบเสนอราคา'
     case 'Invoice':
       return 'ใบแจ้งหนี้'
     case 'Receipt':
-      return 'ใบเสร็จรับเงิน'
+      return hasVat ? 'ใบเสร็จรับเงิน / ใบกำกับภาษี' : 'ใบเสร็จรับเงิน'
     default:
       return type
   }
