@@ -5,11 +5,15 @@ export interface TaxInfo {
   displayAmount: string
 }
 
+export function isVatRate(taxPercentage: number): boolean {
+  return taxPercentage > 0 && Math.abs(taxPercentage - 0.07) < 0.001
+}
+
 export function getTaxInfo(taxPercentage: number, subtotal: number): TaxInfo {
   const taxAmount = subtotal * taxPercentage
 
   // Check for 7% VAT (with some tolerance for floating point)
-  if (taxPercentage > 0 && Math.abs(taxPercentage - 0.07) < 0.001) {
+  if (isVatRate(taxPercentage)) {
     return {
       label: 'VAT 7%',
       percentage: taxPercentage,

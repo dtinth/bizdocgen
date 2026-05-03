@@ -26,7 +26,7 @@
 
     <div class="document-header__info">
       <h2 class="document-header__type">
-        {{ getDocumentTypeInThai(record.Record.Document_Type[0]) }}
+        {{ getDocumentTypeInThai(record.Record.Document_Type[0], hasVat) }}
       </h2>
       <div class="document-header__details">
         <div class="document-header__number">เลขที่: {{ record.Record.Number }}</div>
@@ -47,6 +47,7 @@ import { computed } from 'vue'
 import type { GristRecord } from '../types/document-schema'
 import { formatDate, getDocumentTypeInThai } from '../utils/document'
 import { getViewModel } from '../utils/view-model'
+import { isVatRate } from '../utils/tax'
 
 interface Props {
   record: GristRecord
@@ -57,6 +58,8 @@ const props = defineProps<Props>()
 const viewModel = computed(() => {
   return getViewModel(props.record)
 })
+
+const hasVat = computed(() => isVatRate(props.record.Record.Tax))
 
 function trimAddress(address: string): string {
   return address.trim()
