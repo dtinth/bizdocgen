@@ -23,7 +23,7 @@
     "promptpay-qr": "^0.5.0",
     "qrcode": "^1.5.4",
     "vue": "^3.5.33",
-    "zod": "^4.1.12"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
