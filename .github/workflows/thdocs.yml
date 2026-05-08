@@ -1,0 +1,16 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  publish:
+    permissions:
+      contents: read
+      id-token: write
+    uses: dtinth/thdocs/.github/workflows/publish.yml@main
+    with:
+      deploy: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
