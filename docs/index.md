@@ -28,5 +28,5 @@ advanced
 :maxdepth: 1
 
 license
-MIT License <https://github.com/dtinth/bizdocgen/blob/main/LICENSE>
+mit-license
 ```
