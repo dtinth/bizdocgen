@@ -1,6 +1,10 @@
 {
   "permissions": {
-    "allow": ["Bash(vp run lint:*)", "Bash(vp run type-check:*)"],
+    "allow": [
+      "Bash(vp run lint:*)",
+      "Bash(vp run type-check:*)",
+      "Bash(thdocs style-guide *)"
+    ],
     "deny": []
   }
 }
